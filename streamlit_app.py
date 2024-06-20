@@ -1,8 +1,30 @@
 import pandas as pd
 import streamlit as st
 from datetime import datetime, timedelta
+import yfinance as yf
+import requests
+from io import StringIO
+
 
 st.set_page_config(layout="wide")
+
+# test
+
+
+# URL for historical Bank of Canada interest rates
+url = "https://www.bankofcanada.ca/valet/observations/FXCADUSD/csv?start_date=2000-01-01&end_date=2024-01-01"
+
+# Fetch the data
+response = requests.get(url)
+data = StringIO(response.text)
+
+# Read the data into a pandas DataFrame
+df = pd.read_csv(data)
+
+# Display the data
+print(df.head())
+
+
 
 # Updated data for interest rate changes
 interest_rate_changes = [
@@ -112,4 +134,6 @@ if st.button('Calculate'):
     st.dataframe(detailed_df.style.set_properties(**{'width': '250px'}))
 
     st.write('Note: Discounted Rate will not go below 0%.')
+
+
 
